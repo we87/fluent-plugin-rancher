@@ -78,5 +78,5 @@ end
 
 MinitestVcr::Spec.configure!
 
-require 'fluent/plugin/out_kubernetes'
+require 'fluent/plugin/out_rancher'
 

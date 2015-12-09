@@ -16,12 +16,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-class Fluent::KubernetesOutput < Fluent::Output
-  Fluent::Plugin.register_output('kubernetes', self)
+class Fluent::RancherOutput < Fluent::Output
+  Fluent::Plugin.register_output('rancher', self)
 
   config_param :container_id, :string
   config_param :tag, :string
-  config_param :kubernetes_pod_regex, :string, default: '^[^_]+_([^\.]+)\.[^_]+_([^\.]+)\.([^\.]+)'
 
   def initialize
     super
@@ -36,7 +35,7 @@ class Fluent::KubernetesOutput < Fluent::Output
 
   def emit(tag, es, chain)
     es.each do |time,record|
-      Fluent::Engine.emit('kubernetes',
+      Fluent::Engine.emit('rancher',
                           time,
                           enrich_record(tag, record))
     end
@@ -68,14 +67,29 @@ class Fluent::KubernetesOutput < Fluent::Output
       container_name = container.json['Name']
       if container_name
         record["container_name"] = container_name[1..-1] if container_name[0] == '/'
-        regex = Regexp.new(@kubernetes_pod_regex)
-        match = container_name.match(regex)
-        if match
-          pod_container_name, pod_name, pod_namespace =
-            match.captures
-          record["pod_namespace"] = pod_namespace
-          record["pod"] = pod_name
-          record["pod_container"] = pod_container_name
+      end
+
+      config = container.json["Config"]
+      labels = config["Labels"] if config and config["Labels"]
+      if labels
+        if labels["io.kubernetes.pod.namespace"]
+          record["project"] = labels["io.kubernetes.pod.namespace"]
+          record["service"] = labels["io.kubernetes.pod.name"] if labels["io.kubernetes.pod.name"]
+          record["container"] = labels["io.kubernetes.container.name"] if labels["io.kubernetes.container.name"]
+        elsif labels["io.kubernetes.pod.name"]
+          svc, *pod = labels["io.kubernetes.pod.name"].split("/", 2)
+          record["project"] = svc
+          record["service"] = pod[-1] if pod[-1]
+          record["container"] = labels["io.kubernetes.container.name"] if labels["io.kubernetes.container.name"]
+        else labels["io.rancher.project.name"]
+          record["project"] = labels["io.rancher.project.name"]
+          # 2. service name & container name
+          svc_container_name = labels["io.rancher.project_service.name"]
+          if svc_container_name
+            svc, *cnames = svc_container_name.split('/', 3)
+            record["service"] = svc
+            record["container"] = cnames[-1] if cnames[-1]
+          end
         end
       end
     end

@@ -1,0 +1,140 @@
+#
+# Fluentd Rancher Output Plugin - Enrich Fluentd events with Rancher metadata
+#
+# Copyright 2015 Red Hat, Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+---
+http_interactions:
+- request:
+    method: get
+    uri: "<DOCKER_HOST>/v1.16/containers/9b26b527e73550b1fb217d0d643b15aa2ec6607593a6b477cda82a9c72cb82a7/json"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.24.1
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 404
+      message: 
+    headers:
+      Content-Type:
+      - text/plain; charset=utf-8
+      Server:
+      - Docker/1.9.0 (linux)
+      Date:
+      - Wed, 09 Dec 2015 11:13:46 GMT
+      Content-Length:
+      - '77'
+    body:
+      encoding: UTF-8
+      string: |
+        no such id: 9b26b527e73550b1fb217d0d643b15aa2ec6607593a6b477cda82a9c72cb82a7
+    http_version: 
+  recorded_at: Wed, 09 Dec 2015 11:13:46 GMT
+- request:
+    method: get
+    uri: "<DOCKER_HOST>/v1.16/containers/9b26b527e73550b1fb217d0d643b15aa2ec6607593a6b477cda82a9c72cb82a7/json"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.24.1
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 404
+      message: 
+    headers:
+      Content-Type:
+      - text/plain; charset=utf-8
+      Server:
+      - Docker/1.9.0 (linux)
+      Date:
+      - Wed, 09 Dec 2015 11:13:46 GMT
+      Content-Length:
+      - '77'
+    body:
+      encoding: UTF-8
+      string: |
+        no such id: 9b26b527e73550b1fb217d0d643b15aa2ec6607593a6b477cda82a9c72cb82a7
+    http_version: 
+  recorded_at: Wed, 09 Dec 2015 11:13:46 GMT
+- request:
+    method: get
+    uri: "<DOCKER_HOST>/v1.16/containers/9b26b527e73550b1fb217d0d643b15aa2ec6607593a6b477cda82a9c72cb82a7/json"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.24.1
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 404
+      message: 
+    headers:
+      Content-Type:
+      - text/plain; charset=utf-8
+      Server:
+      - Docker/1.9.0 (linux)
+      Date:
+      - Wed, 09 Dec 2015 11:13:46 GMT
+      Content-Length:
+      - '77'
+    body:
+      encoding: UTF-8
+      string: |
+        no such id: 9b26b527e73550b1fb217d0d643b15aa2ec6607593a6b477cda82a9c72cb82a7
+    http_version: 
+  recorded_at: Wed, 09 Dec 2015 11:13:46 GMT
+- request:
+    method: get
+    uri: "<DOCKER_HOST>/v1.16/containers/9b26b527e73550b1fb217d0d643b15aa2ec6607593a6b477cda82a9c72cb82a7/json"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.24.1
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 404
+      message: 
+    headers:
+      Content-Type:
+      - text/plain; charset=utf-8
+      Server:
+      - Docker/1.9.0 (linux)
+      Date:
+      - Wed, 09 Dec 2015 11:13:46 GMT
+      Content-Length:
+      - '77'
+    body:
+      encoding: UTF-8
+      string: |
+        no such id: 9b26b527e73550b1fb217d0d643b15aa2ec6607593a6b477cda82a9c72cb82a7
+    http_version: 
+  recorded_at: Wed, 09 Dec 2015 11:13:46 GMT
+recorded_with: VCR 3.0.0

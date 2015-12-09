@@ -3,13 +3,13 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
-  spec.name          = "fluent-plugin-kubernetes"
-  spec.version       = "0.3.1"
-  spec.authors       = ["Jimmi Dyson"]
+  spec.name          = "fluent-plugin-rancher"
+  spec.version       = "0.1.0"
+  spec.authors       = ["BinZhao"]
   spec.email         = ["jimmidyson@gmail.com"]
-  spec.description   = %q{Output filter plugin to add Kubernetes metadata}
-  spec.summary       = %q{Output filter plugin to add Kubernetes metadata}
-  spec.homepage      = "https://github.com/fabric8io/fluent-plugin-kubernetes"
+  spec.description   = %q{Output filter plugin to add rancher metadata}
+  spec.summary       = %q{Output filter plugin to add rancher metadata}
+  spec.homepage      = "https://github.com/we87/fluent-plugin-rancher"
   spec.license       = "ASL2"
 
   spec.files         = `git ls-files`.split($/)

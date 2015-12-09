@@ -28,7 +28,7 @@ describe 'Fluentd Kubernetes Output Plugin' do
   before do
     Fluent::Test.setup
     @fluentd_driver = Fluent::Test::OutputTestDriver.new(
-      Fluent::KubernetesOutput, 
+      Fluent::RancherOutput,
       'docker.var.lib.docker.containers.9b26b527e73550b1fb217d0d643b15aa2ec6607593a6b477cda82a9c72cb82a7')
     .configure(CONFIG)
   end
@@ -39,9 +39,22 @@ describe 'Fluentd Kubernetes Output Plugin' do
         @fluentd_driver.run do
           @fluentd_driver.emit("container_name" => "k8s_CONTAINER.ff8e9ce_POD.NAMESPACE.api_2b249189-c3e0-11e4-839d-54ee7527188d_c306d8a8")
         end
-        mapped = {'container_id' => '9b26b527e73550b1fb217d0d643b15aa2ec6607593a6b477cda82a9c72cb82a7', 'pod' => 'POD', 'pod_namespace' => 'NAMESPACE', 'pod_container' => 'CONTAINER'}
+        mapped = {'container_id' => '9b26b527e73550b1fb217d0d643b15aa2ec6607593a6b477cda82a9c72cb82a7', 'project' => 'NAMESPACE', 'service' => 'POD', 'container' => 'CONTAINER'}
         assert_equal [
           {"container_name" => "k8s_CONTAINER.ff8e9ce_POD.NAMESPACE.api_2b249189-c3e0-11e4-839d-54ee7527188d_c306d8a8"}.merge(mapped),
+        ], @fluentd_driver.records
+
+        @fluentd_driver.run
+      end
+    end
+    describe 'rancher container' do
+      it 'enriches with correct rancher metadata' do
+        @fluentd_driver.run do
+          @fluentd_driver.emit("container_name" => "6f323098-639c-4376-bc5a-4fea24818278")
+        end
+        mapped = {'container_id' => '9b26b527e73550b1fb217d0d643b15aa2ec6607593a6b477cda82a9c72cb82a7', 'project' => 'NAMESPACE', 'service' => 'SERVICE', 'container' => 'CONTAINER'}
+        assert_equal [
+          {"container_name" => "6f323098-639c-4376-bc5a-4fea24818278"}.merge(mapped),
         ], @fluentd_driver.records
 
         @fluentd_driver.run

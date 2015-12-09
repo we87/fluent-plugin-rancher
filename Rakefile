@@ -16,8 +16,8 @@ task :headers do
 
   args = {
     :license => 'ASL2',
-    :copyright_software => 'Fluentd Kubernetes Output Plugin',
-    :copyright_software_description => "Enrich Fluentd events with Kubernetes metadata",
+    :copyright_software => 'Fluentd Rancher Output Plugin',
+    :copyright_software_description => "Enrich Fluentd events with Rancher metadata",
     :copyright_holders => ['Red Hat, Inc.'],
     :copyright_years => ['2015'],
     :add_path => 'lib:test',
