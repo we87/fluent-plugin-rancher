@@ -1,0 +1,12 @@
+fluentd:
+  image: we87/fluentd-elasticsearch:v0.1.0
+  labels:
+    io.rancher.scheduler.global: 'true'
+    io.rancher.container.hostname_override: container_name
+  tty: true
+  stdin_open: true
+  volumes:
+  - /var/lib/docker/containers:/var/lib/docker/containers:ro
+  - /var/run/docker.sock:/var/run/docker.sock
+  external_links:
+  - es/elasticsearch-clients:elasticsearch
